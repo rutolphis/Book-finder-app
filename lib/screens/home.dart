@@ -73,17 +73,31 @@ class _MyHomePageState extends State<MyHomePage> {
     }
     else {
       return
-          ListView.builder(
-            scrollDirection: Axis.vertical,
+          Expanded(
+              child:ListView.builder(
+            padding: EdgeInsets.zero,
             shrinkWrap: true,
         itemCount: books.length,
-            physics: ScrollPhysics(),
         itemBuilder: (context, index) {
-          return Text(index.toString());
+          return bookCard(books[index].title);
         },
       )
-      ;
+          );
     }
+  }
+
+  Widget bookCard(String title ){
+    return Container(
+      padding: EdgeInsets.all(20),
+      margin: EdgeInsets.all(10),
+      height: 100,
+
+      child: Center(child: Text(title,style: TextStyle(color: Colors.white  ))),
+      decoration: BoxDecoration(
+          color: Colors.black.withOpacity(0.5),
+
+      ),
+    );
   }
 
   @override
@@ -96,7 +110,6 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             findBookForm(),
-            Text("cau"),
             bookCards()
           ]),
     );
