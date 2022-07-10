@@ -32,11 +32,7 @@ class _MyHomePageState extends State<MyHomePage> {
       isLoading = true;
     });
     books = await Api.getBooks(name, currentPage.toString());
-    if (pages > 0) {
-      isBlank = false;
-    } else {
-      isBlank = true;
-    }
+    isBlank = false;
     setState(() {
       isLoading = false;
     });
@@ -101,7 +97,11 @@ class _MyHomePageState extends State<MyHomePage> {
               height: 450,
               child: Transform.scale(
                   scale: 0.2, child: CircularProgressIndicator())));
-    } else {
+    } else if(isBlank == true){
+      return Expanded(
+          flex: 7, child: Center(child: Text("")));
+    }
+    else {
       if (books.length == 0 || books.isEmpty) {
         return Expanded(
             flex: 7, child: Center(child: Text("Žiadne knihy sa nenašli.")));
@@ -140,7 +140,12 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Widget pagination() {
-    if (!isBlank) {
+    if (isBlank) {
+      return Expanded(flex: 2, child: Text(""));
+    }else if(books.length == 0 || books.isEmpty){
+      return Expanded(flex: 2, child: Text(""));
+    }
+    else {
       return Expanded(
           flex: 2,
           child: NumberPagination(
@@ -158,8 +163,6 @@ class _MyHomePageState extends State<MyHomePage> {
             colorPrimary: Colors.white,
             colorSub: Colors.yellow,
           ));
-    } else {
-      return Expanded(flex: 2, child: Text(""));
     }
   }
 
